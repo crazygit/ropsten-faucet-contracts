@@ -3,7 +3,7 @@
 //
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-import { ethers } from "hardhat";
+import hre, { ethers } from "hardhat"
 
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
@@ -14,17 +14,36 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const Faucet = await ethers.getContractFactory("Faucet");
-  const faucet = await Faucet.deploy();
+  const FaucetFactory = await ethers.getContractFactory("Faucet")
+  const faucet = await FaucetFactory.deploy()
 
-  await faucet.deployed();
+  await faucet.deployed()
 
-  console.log("Faucet deployed to:", faucet.address);
+  const network = await faucet.provider.getNetwork()
+  console.log("Network name:", network.name)
+  console.log("Network chain id: ", network.chainId)
+  console.log("Contract address:", faucet.address)
+  // Returns the contract code of address as of the blockTag block height. If there is no contract currently deployed, the result is 0x.
+  // console.log("Contract code:", await faucet.provider.getCode(faucet.address));
+  console.log("Contract owner address:", await faucet.signer.getAddress())
+
+  if (hre.network.name === "localhost") {
+    console.log("Localhost Network, Add 10 ETH to the contract account")
+    await hre.network.provider.send("hardhat_setBalance", [
+      faucet.address,
+      ethers.utils.parseEther("10").toHexString()
+    ])
+  }
+
+  console.log(
+    "Contract balance:",
+    ethers.utils.formatEther(await faucet.getBalance())
+  )
 }
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+  console.error(error)
+  process.exitCode = 1
+})

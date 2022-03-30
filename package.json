@@ -1,11 +1,25 @@
 {
+  "name": "ropsten-faucet-contract",
+  "version": "1.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "author": "crazygit <lianglin999@gmail.com>",
+  "description": "ropsten faucet contract",
+  "keywords": [
+    "ropsten",
+    "faucet",
+    "contract"
+  ],
   "scripts": {
     "compile": "hardhat compile",
     "node": "hardhat node",
     "test": "hardhat test",
     "coverage": "hardhat coverage",
-    "deploy": "hardhat run scripts/deploy.ts",
-    "clean": "hardhat clean"
+    "deploy-to-hardhat": "hardhat run --network hardhat scripts/deploy.ts",
+    "deploy-to-localhost": "hardhat run --network localhost scripts/deploy.ts",
+    "clean": "hardhat clean",
+    "export-abi": "hardhat export-abi",
+    "clear-abi": "hardhat clear-abi"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",
