@@ -17,6 +17,7 @@
     "coverage": "hardhat coverage",
     "deploy-to-hardhat": "hardhat run --network hardhat scripts/deploy.ts",
     "deploy-to-localhost": "hardhat run --network localhost scripts/deploy.ts",
+    "deploy-to-ropsten": "hardhat run --network ropsten scripts/deploy.ts",
     "clean": "hardhat clean",
     "export-abi": "hardhat export-abi",
     "clear-abi": "hardhat clear-abi"
