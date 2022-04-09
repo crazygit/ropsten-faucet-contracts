@@ -7,6 +7,7 @@ import "@typechain/hardhat"
 import "hardhat-gas-reporter"
 import "solidity-coverage"
 import "hardhat-abi-exporter"
+import { removeConsoleLog } from "hardhat-preprocessor"
 
 dotenv.config()
 
@@ -58,6 +59,13 @@ const config: HardhatUserConfig = {
     only: ["Faucet"],
     spacing: 2,
     pretty: true
+  },
+  // Remove console.log when deploying to public networks
+  preprocess: {
+    eachLine: removeConsoleLog(
+      (hre) =>
+        hre.network.name !== "hardhat" && hre.network.name !== "localhost"
+    )
   }
 }
 
