@@ -29,8 +29,6 @@ contract Faucet is Ownable {
   // Fallback function is called when msg.data is not empty
   fallback() external payable {
     console.log("fallback", msg.value, "from", msg.sender);
-    // TODO: 如何解析msg.data(abi decode calldata)
-    // console.log(msg.data);
     emit FallbackEvent(msg.sender, msg.value);
   }
 
